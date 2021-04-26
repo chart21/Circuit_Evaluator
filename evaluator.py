@@ -56,8 +56,7 @@ def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', inpu
             elements[bitlength_input_a-1-i] = bool(random.getrandbits(1))
     else:
         input_a = int(input_a)        
-        bit_representation = hf.convert_int_to_boolarr(input_a,bitlength_input_a)
-        print(bit_representation, len(bit_representation))
+        bit_representation = hf.convert_int_to_boolarr(input_a,bitlength_input_a)        
         for i in range(len(bit_representation)):
             elements[i] = int(bit_representation[-1-i])
         
@@ -68,8 +67,7 @@ def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', inpu
             elements[bitlength_input_a+bitlength_input_b-1-i] = bool(random.getrandbits(1))
     else:
         input_b = int(input_b)  
-        bit_representation = hf.convert_int_to_boolarr(input_b,bitlength_input_b)
-        print(bit_representation)
+        bit_representation = hf.convert_int_to_boolarr(input_b,bitlength_input_b)        
         for i in range(len(bit_representation)):
             elements[i+bitlength_input_a] = int(bit_representation[-1-i])
 
