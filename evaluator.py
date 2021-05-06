@@ -164,8 +164,14 @@ def main():
 
     filepath = args.filepath
     circuit_format = args.circuitformat
-    input_a = args.input_a
-    input_b = args.input_b
+    if args.input_a.isnumeric():
+        input_a = int (args.input_a)
+    else:
+        input_a = 'r'
+    if args.input_b.isnumeric():
+        input_b = int (args.input_b)
+    else:
+        input_b = 'r'
     function = args.function
     #input_a = int('1561561555555')
     #input_b = int('4894894')
