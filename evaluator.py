@@ -10,7 +10,7 @@ import argparse
 def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', input_b='r', function=''):
     if circuit_format != 'bristol_fashion':
         print('Supported circuit formats: bristol_fashion')
-        raise
+        raise Exception();
     
     circuit = []
     functions = ['sub64', 'adder64', 'mult64']
@@ -71,7 +71,7 @@ def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', inpu
         for i in range(len(bit_representation)):
             elements[i+bitlength_input_a] = int(bit_representation[-1-i])
 
-    #execute circuit, XOR, AND, NOT supported
+    #execute circuit, XOR, AND, OR, NOT supported
 
     for i in range(len(circuit[3:])):
         if circuit[i+3][4] == 'INV':
@@ -81,9 +81,12 @@ def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', inpu
             if circuit[i+3][5] == 'XOR':
                 output_wire = xor(elements[int(circuit[i+3][2])], elements[int(circuit[i+3][3])])
                 elements[int(circuit[i+3][4])] = output_wire        
-            else:
+            elif circuit[i+3][5] == 'AND':
                 output_wire = elements[int(circuit[i+3][2])] and elements[int(circuit[i+3][3])]
                 elements[int(circuit[i+3][4])] = output_wire   
+            elif circuit[i+3][5] == 'OR':
+                output_wire = elements[int(circuit[i+3][2])] or elements[int(circuit[i+3][3])]
+                elements[int(circuit[i+3][4])] = output_wire 
             
 
     circuit_evaluation_finished = time.perf_counter()
@@ -164,7 +167,7 @@ def main():
 
     filepath = args.filepath
     circuit_format = args.circuitformat
-    if args.input_a.isnumeric():
+    if (args.input_a).isnumeric():
         input_a = int (args.input_a)
     else:
         input_a = 'r'

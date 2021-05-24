@@ -7,7 +7,7 @@ The evaluator supports two inputs and an arbitrary number of outputs.
 
 ## Getting Started
 
-``python evaluator.py`` runs adder64 with two random inputs.
+``python3 evaluator.py`` runs adder64 with two random inputs.
 
 ### Optional arguments
 
@@ -23,7 +23,7 @@ The evaluator supports two inputs and an arbitrary number of outputs.
 
 ### Example 
 ```
-python evaluator.py -f ./sub64.txt -a 5555 -b 222 -fu sub64
+python3 evaluator.py -f ./sub64.txt -a 5555 -b 222 -fu sub64
 ```
 
 Evaluates circuit file **sub64.txt** with inputs **5555** and **222**. Functionality was set to sub64. Thus the result is compared to an expected result **(a-b)**.
