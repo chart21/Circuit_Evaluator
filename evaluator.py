@@ -8,9 +8,6 @@ import argparse
 
 
 def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', input_b='r', function=''):
-    if circuit_format != 'bristol_fashion':
-        print('Supported circuit formats: bristol_fashion')
-        raise Exception();
     
     circuit = []
     functions = ['sub64', 'adder64', 'mult64']
@@ -28,15 +25,25 @@ def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', inpu
 
     num_wires = int(circuit[0][1])
     num_gates = int(circuit[0][0])
+    skiplines = 2
 
     if circuit_format == 'bristol_fashion':
         bitlength_input_a = int(circuit[1][1])
         bitlength_input_b = int(circuit[1][2])
         bitlength_outputs = int(circuit[2][1])
         num_outputs = int(circuit[2][0])
-        #bitlength_outputs = 64
-        #num_outputs = 1
-        #bitlength_outputs = 128
+        skiplines+=1
+    elif circuit_format == 'emp' or circuit_format == 'cbmc':
+        bitlength_input_a = int(circuit[1][0])
+        bitlength_input_b = int(circuit[1][1])
+        bitlength_outputs = int(circuit[1][2])
+        num_outputs = 1
+    else:
+        print('Supported circuit formats: bristol_fashion, emp, cbmc')
+        raise Exception();
+
+
+
 
     
     circuit_reading_finished = time.perf_counter()
@@ -73,20 +80,20 @@ def executeCircuit(filepath, circuit_format='bristol_fashion', input_a='r', inpu
 
     #execute circuit, XOR, AND, OR, NOT supported
 
-    for i in range(len(circuit[3:])):
-        if circuit[i+3][4] == 'INV':
-            output_wire = not elements[int(circuit[i+3][2])]
-            elements[int(circuit[i+3][3])] = output_wire
+    for i in range(len(circuit[skiplines:])):
+        if circuit[i+skiplines][4] == 'INV':
+            output_wire = not elements[int(circuit[i+skiplines][2])]
+            elements[int(circuit[i+skiplines][3])] = output_wire
         else:
-            if circuit[i+3][5] == 'XOR':
-                output_wire = xor(elements[int(circuit[i+3][2])], elements[int(circuit[i+3][3])])
-                elements[int(circuit[i+3][4])] = output_wire        
-            elif circuit[i+3][5] == 'AND':
-                output_wire = elements[int(circuit[i+3][2])] and elements[int(circuit[i+3][3])]
-                elements[int(circuit[i+3][4])] = output_wire   
-            elif circuit[i+3][5] == 'OR':
-                output_wire = elements[int(circuit[i+3][2])] or elements[int(circuit[i+3][3])]
-                elements[int(circuit[i+3][4])] = output_wire 
+            if circuit[i+skiplines][5] == 'XOR':
+                output_wire = xor(elements[int(circuit[i+skiplines][2])], elements[int(circuit[i+skiplines][3])])
+                elements[int(circuit[i+skiplines][4])] = output_wire        
+            elif circuit[i+skiplines][5] == 'AND':
+                output_wire = elements[int(circuit[i+skiplines][2])] and elements[int(circuit[i+skiplines][3])]
+                elements[int(circuit[i+skiplines][4])] = output_wire   
+            elif circuit[i+skiplines][5] == 'OR':
+                output_wire = elements[int(circuit[i+skiplines][2])] or elements[int(circuit[i+skiplines][3])]
+                elements[int(circuit[i+skiplines][4])] = output_wire 
             
 
     circuit_evaluation_finished = time.perf_counter()

@@ -39,3 +39,12 @@ circuit output 0:  5333
 expected_result 5333
 circuit output and expected result match
 ```
+
+```
+python3 evaluator.py -c emp -f ./setIntersect.txt 
+```
+```
+python3 evaluator.py -c cbmc -f ./setIntersect.txt 
+```
+
+Evaluates circuit file **setIntersect.txt** compiled with cbmc-gc2/emp with random inputs. 
